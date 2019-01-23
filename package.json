@@ -1,0 +1,27 @@
+{
+  "name": "safe-web3-provider",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --progress",
+    "watch": "webpack --progress --watch",
+    "clean": "rm -rf build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gnosis/safe-web3-provider"
+  },
+  "author": "Gnosis",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
+  },
+  "dependencies": {
+    "web3-provider-engine": "^14.1.0"
+  }
+}
