@@ -2,8 +2,6 @@ import ProviderEngine from 'web3-provider-engine'
 import SubscriptionSubprovider from 'web3-provider-engine/subproviders/subscriptions.js'
 import DefaultFixture from 'web3-provider-engine/subproviders/default-fixture.js'
 import NonceTrackerSubprovider from 'web3-provider-engine/subproviders/nonce-tracker.js'
-import CacheSubprovider from 'web3-provider-engine/subproviders/cache.js'
-import InflightCacheSubprovider from 'web3-provider-engine/subproviders/inflight-cache'
 import SanitizingSubprovider from 'web3-provider-engine/subproviders/sanitizer.js'
 import FetchSubprovider from 'web3-provider-engine/subproviders/fetch.js'
 
@@ -45,20 +43,12 @@ const SafeProvider = function ({
   const sanitizer = new SanitizingSubprovider()
   engine.addProvider(sanitizer)
 
-  // cache layer
-  const cacheSubprovider = new CacheSubprovider()
-  engine.addProvider(cacheSubprovider)
-
   const filterAndSubsSubprovider = new SubscriptionSubprovider()
   // forward subscription events through provider
   filterAndSubsSubprovider.on('data', function (err, notification) {
     engine.emit('data', err, notification)
   })
   engine.addProvider(filterAndSubsSubprovider)
-
-  // inflight cache
-  const inflightCache = new InflightCacheSubprovider()
-  engine.addProvider(inflightCache)
 
   engine.addProvider(new FetchSubprovider({ rpcUrl }))
 
