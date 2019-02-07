@@ -17,9 +17,7 @@ import SafeProvider from 'safe-web3-provider'
 /**
  *  Create Safe Provider
  */
-const provider = new SafeProvider({
-  rpcUrl: 'http://localhost:8545'
-})
+const provider = new SafeProvider()
 
 /**
  *  Create Web3
