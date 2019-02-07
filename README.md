@@ -6,7 +6,7 @@ It's highly recommended to integrate it in your Dapp to asure a good performance
 
 ## Installation
 ```
-npm install github:gnosis/safe-web3-provider#v1.0.0 -S
+npm install github:gnosis/safe-web3-provider#v1.0.1 -S
 ```
 
 ## Usage
