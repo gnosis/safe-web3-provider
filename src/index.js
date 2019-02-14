@@ -7,9 +7,7 @@ import FetchSubprovider from 'web3-provider-engine/subproviders/fetch.js'
 
 import SafeSubprovider from './SafeSubprovider'
 
-const SafeProvider = function ({
-  rpcUrl
-}) {
+const SafeProvider = function () {
   const engine = new ProviderEngine()
 
   engine.setMaxListeners(0)
@@ -49,8 +47,6 @@ const SafeProvider = function ({
     engine.emit('data', err, notification)
   })
   engine.addProvider(filterAndSubsSubprovider)
-
-  engine.addProvider(new FetchSubprovider({ rpcUrl }))
 
   const sendAsync = function (payload, cb) {
     engine.sendAsync(payload, cb)
@@ -100,11 +96,20 @@ const SafeProvider = function ({
     })
   }
 
+  const safeInitializeProviderHandler = function (data) {
+    window.removeEventListener('EV_SAFE_INITIALIZE_PROVIDER', safeInitializeProviderHandler)
+    const rpcUrl = data.detail.rpcUrl
+    engine.addProvider(new FetchSubprovider({ rpcUrl }))
+    engine.currentSafe = data.detail.safe
+  }
+  window.addEventListener('EV_SAFE_INITIALIZE_PROVIDER', safeInitializeProviderHandler)
+
   window.addEventListener('EV_SAFE_UPDATE_PROVIDER', function (data) {
     engine.currentSafe = data.detail
   })
-  const safeProviderReadyEvent = new window.CustomEvent('EV_SAFE_PROVIDER_READY')
-  window.dispatchEvent(safeProviderReadyEvent)
+
+  const safeProviderWaitingEvent = new window.CustomEvent('EV_SAFE_PROVIDER_WAITING')
+  window.dispatchEvent(safeProviderWaitingEvent)
 
   engine.start()
 
