@@ -46,7 +46,7 @@ const SafeProvider = function ({
   const sanitizer = new SanitizingSubprovider()
   engine.addProvider(sanitizer)
 
-  const filterAndSubsSubprovider = new SubscriptionSubprovider()
+  const filterAndSubsSubprovider = new SubscriptionSubprovider({ maxFilters: 100 })
   // forward subscription events through provider
   filterAndSubsSubprovider.on('data', function (err, notification) {
     engine.emit('data', err, notification)
