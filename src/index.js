@@ -25,6 +25,9 @@ const SafeProvider = function ({
     }
   }
 
+  engine.constructor = {
+    name: 'SafeWeb3Provider'
+  }
   engine.isSafe = true
   engine.isConnected = function () {
     return true
