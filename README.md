@@ -6,7 +6,7 @@ It's highly recommended to integrate it in your Dapp to asure a good performance
 
 ## Installation
 ```
-npm install github:gnosis/safe-web3-provider#v1.0.1 -S
+npm install github:gnosis/safe-web3-provider#v1.0.2 -S
 ```
 
 ## Usage
@@ -25,6 +25,11 @@ const provider = new SafeProvider({
  *  Create Web3
  */
 const web3 = new Web3(provider)
+
+/**
+ *  Provider name
+ */
+console.log(web3.currentProvider.constructor.name)
 
 /**
  *  Get Accounts
