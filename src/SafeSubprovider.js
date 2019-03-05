@@ -20,6 +20,24 @@ class SafeSubprovider {
     window.addEventListener('EV_RESOLVED_TRANSACTION' + id, resolveTransactionHandler)
   }
 
+  signTypedData(payload, end) {
+    const showPopupSignEvent = new window.CustomEvent(
+      'EV_SHOW_POPUP_SIGNATURE',
+      { detail: payload.params }
+    )
+    window.dispatchEvent(showPopupSignEvent)
+    const signedTypedDataHandler = function (data) {
+      window.removeEventListener('EV_RESOLVED_WALLET_SIGN_TYPED_DATA', signedTypedDataHandler)
+
+      if (data.detail.walletSignature) {
+        end(null, data.detail.walletSignature)
+      } else {
+        end(new Error('Signature rejected'))
+      }
+    }
+    window.addEventListener('EV_RESOLVED_WALLET_SIGN_TYPED_DATA', signedTypedDataHandler)
+  }
+
   handleRequest(payload, next, end) {
     const account = this.engine.currentSafe
     switch (payload.method) {
@@ -31,6 +49,9 @@ class SafeSubprovider {
         return
       case 'eth_sendTransaction':
         this.sendTransaction(payload, end)
+        return
+      case 'wallet_signTypedData':
+        this.signTypedData(payload, end)
         return
       default:
         next()
