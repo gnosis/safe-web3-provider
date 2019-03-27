@@ -17,12 +17,9 @@ const SafeProvider = function ({
   // Metamask methods are temporary. Must be deleted in the future.
   engine.isMetaMask = !0
   engine._metamask = {
-    isApproved: function () {
-      return true
-    },
-    isUnlocked: function () {
-      return true
-    }
+    isApproved: () => true,
+    isUnlocked: () => true,
+    isEnabled: () => true
   }
 
   engine.constructor = {
@@ -60,18 +57,17 @@ const SafeProvider = function ({
   }
 
   const sendSync = function (payload) {
-    // eslint-disable-next-line
-    var r = undefined
+    let result
     switch (payload.method) {
       case 'eth_accounts':
-        r = engine.currentSafe ? [engine.currentSafe] : []
+        result = engine.currentSafe ? [engine.currentSafe] : []
         break
       case 'eth_coinbase':
-        r = engine.currentSafe || null
+        result = engine.currentSafe || null
         break
       case 'eth_uninstallFilter':
         sendAsync(payload, function () { })
-        r = true
+        result = true
         break
       default:
         throw new Error('SafeProvider does not support this synchronous request', payload)
@@ -79,7 +75,7 @@ const SafeProvider = function ({
     return {
       id: payload.id,
       jsonrpc: payload.jsonrpc,
-      result: r
+      result
     }
   }
 
