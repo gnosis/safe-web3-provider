@@ -2,7 +2,7 @@
 
 This provider is injected by the [Gnosis Safe Authenticator](https://github.com/gnosis/safe-browser-extension) when Dapps are whitelisted in the extension.
 
-It's highly recommended to integrate it in your Dapp to asure a good performance.
+It's highly recommended to integrate it in your Dapp to ensure a good performance.
 
 ## Installation
 ```
