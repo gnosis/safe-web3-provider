@@ -1,6 +1,6 @@
 # Safe Web3 Provider
 
-This provider is injected by the [Safe Browser Extension](https://github.com/gnosis/safe-browser-extension) when Dapps are whitelisted in the extension.
+This provider is injected by the [Gnosis Safe Authenticator](https://github.com/gnosis/safe-browser-extension) when Dapps are whitelisted in the extension.
 
 It's highly recommended to integrate it in your Dapp to asure a good performance.
 
